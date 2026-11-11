@@ -15,6 +15,7 @@ const tp = r.token;
 [s, r] = await call('POST', '/api/auth/login', { email: 'piloto@teste.local', password: 'errada' }); ok(s === 401, 'senha errada recusada');
 [s, r] = await call('POST', '/api/auth/login', { email: 'piloto@teste.local', password: '12345678' }); ok(s === 200, 'login piloto');
 [s, r] = await call('POST', '/api/ai/impressions', { text: 'moroso para entrar nas curvas 3,4 e 5', symptoms: [{ id: 'entry_us', label: 'x' }], context: { car: 'Corvette', track: 'Spielberg', kind: 'qsim' } }, tp); ok(s === 200 && r.result.sintomas[0].sym === 'entry_us', 'leitura pela IA do servidor');
+[s, r] = await call('POST', '/api/ai/impressions', { text: 'moroso para entrar nas curvas 3,4 e 5', symptoms: [{ id: 'entry_us', label: 'x' }], context: { car: 'Corvette', track: 'Spielberg', kind: 'qsim' } }, tp); ok(s === 200 && r.cached === true && r.cost === 0, 'mesmo texto não cobra de novo');
 [s, r] = await call('GET', '/api/admin/report', null, tm); ok(s === 200 && r.calls === 1 && r.by_user[0].name === 'Colega' && r.total_cost > 0, 'relatório do master com uso: ' + JSON.stringify({ calls: r.calls, cost: r.total_cost.toFixed(4) }));
 [s, r] = await call('POST', '/api/admin/users', { email: 'piloto@teste.local', action: 'reset' }, tm); ok(s === 200, 'master redefine senha');
 [s, r] = await call('GET', '/api/me', null, tp); ok(s === 401, 'token antigo invalida após redefinição');
