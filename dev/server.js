@@ -7,7 +7,8 @@ const mockFetch = async (url, opt) => {
   const b = JSON.parse(opt.body); const txt = b.messages[0].content;
   return { ok: true, status: 200, json: async () => ({ usage: { input_tokens: 2600, output_tokens: 450 }, content: [{ type: 'tool_use', name: 'registrar_leitura', input: {
     resumo: 'Frente preguiçosa no turn-in das curvas 3, 4 e 5 e leve subesterço na 7.',
-    sintomas: [{ sym: 'entry_us', curvas: [3, 4, 5], intensidade: 'moderado', citacao: txt.slice(txt.indexOf('<texto>') + 7, txt.indexOf('<texto>') + 60), explicacao: 'Simulado.' }],
+    parecer: 'A telemetria apoia o que você sentiu na 7: os dianteiros rodaram 9 °C mais quentes que os traseiros, sinal de frente trabalhando demais. Nas curvas 3 a 5 ela não mostra subesterço claro; a perda ali vem mais da frenagem antecipada na 3. Sua velocidade máxima foi 244 km/h na melhor volta, em linha com o Aston nesta pista. Para deixar o carro mais ágil na entrada, comece pelo balanço de freio um pouco para trás.',
+    sintomas: [{ sym: 'entry_us', curvas: [3, 4, 5], intensidade: 'moderado', citacao: 'Sinto ele moroso para entrar nas curvas 3,4 e 5.', explicacao: '"Moroso para entrar" é a frente demorando a apontar na entrada.' }],
     perguntas: [], outros: [] } }] }) };
 };
 export function start(port = Number(process.env.PORT || 8787), env = {}) {
